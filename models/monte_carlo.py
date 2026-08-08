@@ -3,8 +3,7 @@ import numpy as np
 
 def monte_carlo_call(S0, K, r, sigma, T, N):
     """Standard Monte Carlo pricing for European Call Option."""
-    N_total = 2 * N
-    Z_std = np.random.normal(0, 1, N_total)
+    Z_std = np.random.normal(0, 1, 2*N)
     
     ST_std = S0 * np.exp((r - 0.5 * sigma**2) * T + sigma * np.sqrt(T) * Z_std)
     payoffs_std = np.maximum(ST_std - K, 0)
@@ -16,7 +15,7 @@ def monte_carlo_call(S0, K, r, sigma, T, N):
     return mc_price, mc_standard_error
 
 
-def antithetic_monte_carlo_call(S0, K, r, sigma, T, N_pairs):
+def antithetic_monte_carlo_call(S0, K, r, sigma, T, N):
     Z_anti = np.random.normal(0, 1, N)
     ST1 = S0 * np.exp((r - 0.5 * sigma**2) * T + sigma * np.sqrt(T) * Z_anti)
     ST2 = S0 * np.exp((r - 0.5 * sigma**2) * T - sigma * np.sqrt(T) * Z_anti)
