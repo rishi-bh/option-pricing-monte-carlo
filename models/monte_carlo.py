@@ -1,28 +1,35 @@
-def monte_carlo_call(
-    S0: float, K: float, r: float, sigma: float, T: float, N: int
-) -> Tuple[float, float]:
+from scipy.stats import norm
+import numpy as np
+
+def monte_carlo_call(S0, K, r, sigma, T, N):
     """Standard Monte Carlo pricing for European Call Option."""
-    Z = np.random.normal(0, 1, N)
-    ST = S0 * np.exp((r - 0.5 * sigma**2) * T + sigma * np.sqrt(T) * Z)
-    payoffs = np.maximum(ST - K, 0)
-    discounted_payoffs = np.exp(-r * T) * payoffs
+    N_total = 2 * N
+    Z_std = np.random.normal(0, 1, N_total)
+    
+    ST_std = S0 * np.exp((r - 0.5 * sigma**2) * T + sigma * np.sqrt(T) * Z_std)
+    payoffs_std = np.maximum(ST_std - K, 0)
+    discounted_payoffs_std = np.exp(-r * T) * payoffs_std
+    
+    mc_price = np.mean(discounted_payoffs_std)
+    # Divide by sqrt(len(discounted_payoffs_std)) which is sqrt(2*N)
+    mc_standard_error = np.std(discounted_payoffs_std, ddof=1) / np.sqrt(N_total)
+    return mc_price, mc_standard_error
 
-    price = np.mean(discounted_payoffs)
-    standard_error = np.std(discounted_payoffs, ddof=1) / np.sqrt(N)
-    return price, standard_error
 
-
-def antithetic_monte_carlo_call(
-    S0: float, K: float, r: float, sigma: float, T: float, N_pairs: int
-) -> Tuple[float, float]:
-    """Antithetic Variates Monte Carlo pricing for European Call Option."""
-    Z = np.random.normal(0, 1, N_pairs)
-    ST1 = S0 * np.exp((r - 0.5 * sigma**2) * T + sigma * np.sqrt(T) * Z)
-    ST2 = S0 * np.exp((r - 0.5 * sigma**2) * T - sigma * np.sqrt(T) * Z)
-
-    payoffs = (np.maximum(ST1 - K, 0) + np.maximum(ST2 - K, 0)) / 2
-    discounted_payoffs = np.exp(-r * T) * payoffs
-
-    price = np.mean(discounted_payoffs)
-    standard_error = np.std(discounted_payoffs, ddof=1) / np.sqrt(N_pairs)
-    return price, standard_error
+def antithetic_monte_carlo_call(S0, K, r, sigma, T, N_pairs):
+    Z_anti = np.random.normal(0, 1, N)
+    ST1 = S0 * np.exp((r - 0.5 * sigma**2) * T + sigma * np.sqrt(T) * Z_anti)
+    ST2 = S0 * np.exp((r - 0.5 * sigma**2) * T - sigma * np.sqrt(T) * Z_anti)
+    
+    payoff1 = np.maximum(ST1 - K, 0)
+    payoff2 = np.maximum(ST2 - K, 0)
+    
+    average_payoffs = (payoff1 + payoff2) / 2
+    discounted_antithetic_payoffs = np.exp(-r * T) * average_payoffs
+    
+    antithetic_price = np.mean(discounted_antithetic_payoffs)
+    # Divided by sqrt(N) because we have N paired samples
+    antithetic_standard_error = np.std(
+        discounted_antithetic_payoffs, ddof=1
+    ) / np.sqrt(N)
+    return antithetic_price, antithetic_standard_error
