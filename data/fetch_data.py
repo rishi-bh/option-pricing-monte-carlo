@@ -1,3 +1,5 @@
+import yfinance as yf
+
 data = yf.download("SPY", start = "2024-01-01", end = "2026-01-01", auto_adjust= True)
 
 print(data.head())
