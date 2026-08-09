@@ -16,9 +16,9 @@ def main():
 
     # 2. Run Benchmarks
     bs_price = black_scholes_call(S0, K, r, sigma, T)
-    mc_price, mc_se = monte_carlo_call(S0, K, r, sigma, T, N=200_000)
+    mc_price, mc_se = monte_carlo_call(S0, K, r, sigma, T, N=100_000)
     anti_price, anti_se = antithetic_monte_carlo_call(
-        S0, K, r, sigma, T, N_pairs=100_000
+        S0, K, r, sigma, T, N=100_000
     )
 
     print(f"Black-Scholes Price: ${bs_price:.4f}")
