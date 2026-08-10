@@ -13,9 +13,9 @@ def monte_carlo_call(S0, K, r, sigma, T, N):
     mc_standard_error = np.std(discounted_payoffs_std, ddof=1) / np.sqrt(2*N)
     return mc_price, mc_standard_error
 
-# Antihtetic Varites Monte Carlo pricing (N pairs = 2*N path evaluations).
+# Antihtetic Variates Monte Carlo pricing (N pairs = 2*N path evaluations).
 
-def antithetic_monte_carlo_call(S0, K, r, sigma, T, N):
+def antithetic_monte_carlo_call(S0, K, r, sigma, T, N_pairs):
     Z_anti = np.random.normal(0, 1, N)
     ST1 = S0 * np.exp((r - 0.5 * sigma**2) * T + sigma * np.sqrt(T) * Z_anti)
     ST2 = S0 * np.exp((r - 0.5 * sigma**2) * T - sigma * np.sqrt(T) * Z_anti)
