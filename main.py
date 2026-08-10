@@ -35,7 +35,7 @@ def main():
             mc_curve.append(mc_p)
             anti_curve.append(anti_p)
 
-        #plot_convergence(counts, mc_curve, anti_curve, bs_price)
+        plot_convergence(counts, mc_curve, anti_curve, bs_price)
 
     print("-" * 60 + "\n")
 
