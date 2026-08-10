@@ -1,16 +1,13 @@
 import yfinance as yf
 import numpy as np
 
-def get_annualized_volatility(ticker = "SPY", period = "1y"):
-    data = yf.download(ticker, period=period, auto_adjust= True, progress = False)
+def get_annualized_volatility(ticker = "SPY", days = 252):
+    data = yf.download(ticker, period="2y", auto_adjust= True, progress = False)
     
-    prices = data["Close"]
+    prices = data["Close"].tail(days+1)
     
-    log_returns = np.log(
-        prices / prices.shift(1)
-    ).dropna()
+    log_returns = np.log(prices / prices.shift(1)).dropna()
 
-    
     daily_volatility = log_returns.std()
     
     annualized_volatility = daily_volatility * np.sqrt(252)
