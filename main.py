@@ -51,4 +51,4 @@ def main():
     plot_convergence(counts, mc_curve, anti_curve, bs_price)
 
 if __name__ == "__main__":
-main()
+    main()
