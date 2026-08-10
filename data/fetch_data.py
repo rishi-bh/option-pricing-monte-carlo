@@ -1,7 +1,7 @@
 import yfinance as yf
 import numpy as np
 
-def get_annualized_volatility(ticker = "SPY", window = "1y"):
+def get_annualized_volatility(ticker = "SPY", period = "1y"):
     data = yf.download(ticker, period=period, auto_adjust= True, progress = False)
     
     prices = data["Close"]
