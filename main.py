@@ -8,7 +8,11 @@ from utils.plotting import plot_convergence
 def main():
     np.random.seed(42)
     # 1. Fetch Volatility & Set Parameters
-    sigma = get_annualized_volatility(ticker="SPY")
+    windows = ["3mo", "6mo", "1y", "2y", "5y"]
+    for window in windows:
+        sigma = get_annualized_volatility(ticker="SPY", period=window)
+        print(f"{window}: "f"{sigma:.2%}")
+
     S0, K, r, T = 100.0, 100.0, 0.05, 1.0
     
     print(f"Annualized Volatility (SPY): {sigma:.4f}")
