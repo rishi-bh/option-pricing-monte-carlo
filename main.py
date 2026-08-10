@@ -8,7 +8,7 @@ from utils.plotting import plot_convergence
 
 def main():
     ticker = "SPY"
-    spy_data = yf.download(ticker, period="5d", progress=False, multi_level_index=False)
+    spy_data = yf.download(ticker, period = "5d", progress = False, multi_level_index = False)
     S0 = float(spy_data["Close"].iloc[-1])
     K = S0 
     r, T = 0.05, 1.0
