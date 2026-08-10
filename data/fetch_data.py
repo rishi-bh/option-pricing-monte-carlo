@@ -15,4 +15,4 @@ def get_annualized_volatility(ticker = "SPY", start = "2024-01-01", end = "2026-
     
     annualized_volatility = daily_volatility * np.sqrt(252)
     
-    return float(annualized_volatility)
+    return float(annualized_volatility.item())
