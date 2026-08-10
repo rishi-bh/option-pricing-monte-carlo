@@ -24,20 +24,16 @@ The project focuses on:
 
 The underlying asset is modeled using Geometric Brownian Motion:
 
-$
-dS_t = \mu S_tdt+\sigma S_tdW_t
-$
+$dS_t = \mu S_tdt+\sigma S_tdW_t$
 
 Under the risk-neutral measure, the simulated terminal price is:
 
-$
-S_T =
+$S_T =
 S_0
 \exp\left[
 \left(r-\frac{\sigma^2}{2}\right)T
 +\sigma\sqrt{T}Z
-\right]
-$
+\right]$
 
 where:
 
@@ -51,19 +47,15 @@ where:
 
 For a European call option:
 
-$
-C_T=\max(S_T-K,0)
-$
+$C_T=\max(S_T-K,0)$
 
 The Monte Carlo estimate is:
 
-$
-C_0 =
+$C_0 =
 e^{-rT}
 \frac{1}{N}
 \sum_{i=1}^{N}
-\max(S_T^{(i)}-K,0)
-$
+\max(S_T^{(i)}-K,0)$
 
 where (N) is the number of simulated paths.
 
@@ -71,24 +63,15 @@ where (N) is the number of simulated paths.
 
 The simulation is evaluated against the analytical Black-Scholes price:
 
-$
-C =
-S_0N(d_1)-Ke^{-rT}N(d_2)
-$
+$C =S_0N(d_1)-Ke^{-rT}N(d_2)$
 
 where:
 
-$
-d_1=
-\frac{\ln(S_0/K)+(r+\sigma^2/2)T}
-{\sigma\sqrt{T}}
-$
+$d_1=\frac{\ln(S_0/K)+(r+\sigma^2/2)T}{\sigma\sqrt{T}}$
 
 and
 
-$
-d_2=d_1-\sigma\sqrt{T}
-$
+$d_2=d_1-\sigma\sqrt{T}$
 
 The Black-Scholes result provides a theoretical benchmark for evaluating Monte Carlo convergence.
 
@@ -100,21 +83,17 @@ The project implements Antithetic Variates to reduce Monte Carlo estimator varia
 
 For each simulated random variable (Z), a corresponding (-Z) is generated:
 
-$
-Z_i,\quad -Z_i
-$
+$Z_i,\quad -Z_i$
 
 The resulting terminal prices are used to construct paired payoff estimates.
 
 The estimator becomes:
 
-$
-\hat{C} =
+$\hat{C} =
 e^{-rT}
 \frac{1}{N}
 \sum_{i=1}^{N}
-\frac{f(Z_i)+f(-Z_i)}{2}
-$
+\frac{f(Z_i)+f(-Z_i)}{2}$
 
 Because the paired simulations are negatively correlated, this can reduce estimator variance without requiring additional independent random draws.
 
@@ -124,9 +103,7 @@ The model evaluates convergence by comparing the Monte Carlo estimate against th
 
 For each simulation size, the model can measure:
 
-$
-Error = |\hat{C}*{MC}-C*{BS}|
-$
+Error = $|\hat{C}*{MC}-C*{BS}|$
 
 This allows comparison between:
 
@@ -215,7 +192,7 @@ pip install numpy pandas matplotlib yfinance
 Run the pricing engine:
 
 ```bash
-python option_pricing.py
+python main.py
 ```
 
 The program retrieves historical market data, estimates volatility, simulates option prices, and compares the results with the Black-Scholes analytical solution.
