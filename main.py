@@ -1,4 +1,5 @@
 import numpy as np
+import yfinance as yf
 from data.fetch_data import get_annualized_volatility
 from models.black_scholes import black_scholes_call
 from models.monte_carlo import antithetic_monte_carlo_call, monte_carlo_call
