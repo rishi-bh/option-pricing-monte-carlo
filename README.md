@@ -103,7 +103,9 @@ The model evaluates convergence by comparing the Monte Carlo estimate against th
 
 For each simulation size, the model can measure:
 
-Error = $\hat{C}*{MC}-C*{BS}$
+Error = $|\hat{C}
+\cdot{MC}
+-C\cdot{BS}|$
 
 This allows comparison between:
 
