@@ -18,6 +18,9 @@ The project focuses on:
 * Convergence analysis
 * Simulation error
 
+<img width="700" height="475" alt="montecarlo" src="https://github.com/user-attachments/assets/15c39d64-13a5-4d0f-b01d-09f1b75689a5" />
+
+
 ## Mathematical Framework
 
 ### Asset Price Simulation
